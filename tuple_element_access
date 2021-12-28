@@ -1,0 +1,22 @@
+Way to access std::tuple
+
+
+    // Worst...
+    try {
+      std::cout << std::get<int>(v1) << std::endl;
+    } catch (const std::bad_variant_access&) {}
+
+    // Still bad...
+    if (v1.index() == 0) {
+      std::cout << std::get<int>(v1) << std::endl; 
+    }
+
+    // Slightly better... 
+    if (std::holds_alternative<int>(v1)) {
+      std::cout << std::get<int>(v1) << std::endl;
+    } 
+
+    // ...Best.
+    if (int *p = std::get_if<int>(&v1)) {
+      std::cout << *p << std::endl; 
+    }
